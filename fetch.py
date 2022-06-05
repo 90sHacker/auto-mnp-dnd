@@ -37,26 +37,26 @@ class FetchEmail():
         result, messages = self.search(value)
         print(messages)
 
-        #get the id's of the messages as a string
-        # id = email.message_from_bytes(messages[0]).as_string()
-        id = int(messages[0])
-        print(id, '*****')
+        if (messages and len(messages) > 1):
+            # get the id's of the messages as a string
+            id = email.message_from_bytes(messages[0]).as_string()
+            #create an array of id's and pick the last element which is the most recent
+            id_array = id.split(' ')
+            message_id = id_array[-1]
 
-        #create an array of id's and pick the last element which is the most recent
-        # id_array = id.split(' ')
-        # message = id_array[-1]
-        # print(message)
+        if (messages and len(messages) == 1):
+            message_id = int(messages[0])
+
         if result == 'OK':
-            # try:
-            res, data = self.connection.fetch(str(id), "(RFC822)")
-            print(res)
-            # except:
-            #     print("No email found")
-            #     self.close_connection()
-            #     exit()
+            try:
+                res, data = self.connection.fetch(str(message_id), "(RFC822)")
+            except:
+                print("No email found")
+                self.close_connection()
+                exit()
             
             msgs.append(data[0][1])
-            response, data = self.connection.store(str(id), '+FLAGS', '\\Seen')
+            response, data = self.connection.store(str(message_id), '+FLAGS', '\\Seen')
 
         return msgs
 
