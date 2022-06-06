@@ -2,6 +2,7 @@ import imaplib, email
 import textract
 import tempfile
 import boto3
+import os
 from pathlib import Path
 from email.header import decode_header
 from datetime import datetime
@@ -102,38 +103,6 @@ class FetchEmail():
                     att_dir = Path(download_folder)
                     file_path = att_dir / file_name
                     if str(file_path.suffix) in ['.txt', '.xls', '.csv']:
-                        
-                        #     if self.check_file_name(file_name.stem, ['mnp']):
-                        #         #convert file to .txt
-                        #         temp = tempfile.NamedTemporaryFile(delete=False, suffix=file_name.suffix)
-                        #         temp.write(part.get_payload(decode=True))
-                        #         #upload to s3 as specified name format
-                        #         pass
-                        #     if self.check_file_name(file_name.stem, ['dnd']):
-                        #         #convert file to .txt
-                        #         #upload to s3 as specified name format
-                        #         pass
-
-                        # elif value.__contains__('airtel'):
-                        #     if self.check_file_name(file_name.stem, ['mnp']):
-                        #         #convert file to .txt
-                        #         #upload to s3 as specified name format
-                        #         pass
-                        #     if self.check_file_name(file_name.stem, ['dnd']):
-                        #         #convert file to .txt
-                        #         #upload to s3 as specified name format
-                        #         pass
-
-                        # elif value.__contains__('9mobile'):
-                        #     if self.check_file_name(file_name.stem, ['mnp']):
-                        #         #convert file to .txt
-                        #         #upload to s3 as specified name format
-                        #         pass
-                        #     if self.check_file_name(file_name.stem, ['dnd']):
-                        #         #convert file to .txt
-                        #         #upload to s3 as specified name format
-                        #         pass
-                        
                         if att_dir.exists() == False:
                             att_dir.mkdir()
                         file_path.write_bytes(part.get_payload(decode=True))
@@ -174,18 +143,95 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     with open(Path(temp.name), "rb") as tp:
                         s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/telco_mnp/email_raw/telco=mtn/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                        
-                if self.check_file_name(file_name.stem, ['dnd']):
-                    #convert file to .txt
-                    #upload to s3 as specified name format
-                    pass
+                    temp.close()
+                    os.unlink(temp)
 
-            if path.stem != '.DS_Store':
-                text = textract.process(str(path.absolute()))
-                print(path.absolute())
-                if con_dir.exists() == False:
-                    con_dir.mkdir()
-                con_dir.joinpath(f'{path.stem}.txt').write_bytes(text)
+                if self.check_file_name(path.stem, ['dnd']):
+                    #convert file to .txt
+                    text = textract.process(str(path.absolute()))
+                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
+                    temp.write(text)
+                    #upload to s3 as specified name format
+                    with open(Path(temp.name), "rb") as tp:
+                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/dnd_blacklist/email_raw/telco=mtn/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                    temp.close()
+                    os.unlink(temp)
+
+            elif path.stem.__contains__('airtel'):
+                if self.check_file_name(path.stem, ['mnp']):
+                    #convert file to .txt
+                    text = textract.process(str(path.absolute()))
+                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
+                    temp.write(text)
+                    #upload to s3 as specified name format
+                    with open(Path(temp.name), "rb") as tp:
+                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/telco_mnp/email_raw/telco=airtel/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                    temp.close()
+                    os.unlink(temp)
+
+                if self.check_file_name(path.stem, ['dnd']):
+                    #convert file to .txt
+                    text = textract.process(str(path.absolute()))
+                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
+                    temp.write(text)
+                    #upload to s3 as specified name format
+                    with open(Path(temp.name), "rb") as tp:
+                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/dnd_blacklist/email_raw/telco=airtel/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                    temp.close()
+                    os.unlink(temp)
+
+            elif path.stem.__contains__('glo'):
+                if self.check_file_name(path.stem, ['mnp']):
+                    #convert file to .txt
+                    text = textract.process(str(path.absolute()))
+                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
+                    temp.write(text)
+                    #upload to s3 as specified name format
+                    with open(Path(temp.name), "rb") as tp:
+                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/telco_mnp/email_raw/telco=glo/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                    temp.close()
+                    os.unlink(temp)
+
+                if self.check_file_name(path.stem, ['dnd']):
+                    #convert file to .txt
+                    text = textract.process(str(path.absolute()))
+                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
+                    temp.write(text)
+                    #upload to s3 as specified name format
+                    with open(Path(temp.name), "rb") as tp:
+                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/dnd_blacklist/email_raw/telco=glo/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                    temp.close()
+                    os.unlink(temp)
+            
+            elif path.stem.__contains__('9mobile'):
+                if self.check_file_name(path.stem, ['mnp']):
+                    #convert file to .txt
+                    text = textract.process(str(path.absolute()))
+                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
+                    temp.write(text)
+                    #upload to s3 as specified name format
+                    with open(Path(temp.name), "rb") as tp:
+                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/telco_mnp/email_raw/telco=9mobile/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                    temp.close()
+                    os.unlink(temp)
+
+                if self.check_file_name(path.stem, ['dnd']):
+                    #convert file to .txt
+                    text = textract.process(str(path.absolute()))
+                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
+                    temp.write(text)
+                    #upload to s3 as specified name format
+                    with open(Path(temp.name), "rb") as tp:
+                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/dnd_blacklist/email_raw/telco=9mobile/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                    temp.close()
+                    os.unlink(temp)
+            else:
+                if path.stem != '.DS_Store':
+                    text = textract.process(str(path.absolute()))
+                    print(path.absolute())
+                    if con_dir.exists() == False:
+                        con_dir.mkdir()
+                    con_dir.joinpath(f'{path.stem}.txt').write_bytes(text)
 
 if __name__ == '__main__':
     mail = FetchEmail('imap.gmail.com', 'bshobanke@terragonltd.com', 'uedijmdxacoxmlos')
