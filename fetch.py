@@ -1,9 +1,11 @@
-import imaplib, email
+import imaplib
+import email
 import textract
 from pathlib import Path
 from email.header import decode_header
 from datetime import datetime
 from dateutil.parser import *
+
 
 class FetchEmail():
 
@@ -40,7 +42,7 @@ class FetchEmail():
         if (messages and len(messages) > 1):
             # get the id's of the messages as a string
             id = email.message_from_bytes(messages[0]).as_string()
-            #create an array of id's and pick the last element which is the most recent
+            # create an array of id's and pick the last element which is the most recent
             id_array = id.split(' ')
             message_id = id_array[-1]
 
@@ -54,9 +56,10 @@ class FetchEmail():
                 print("No email found")
                 self.close_connection()
                 exit()
-            
+
             msgs.append(data[0][1])
-            response, data = self.connection.store(str(message_id), '+FLAGS', '\\Seen')
+            response, data = self.connection.store(
+                str(message_id), '+FLAGS', '\\Seen')
 
         return msgs
 
@@ -82,10 +85,10 @@ class FetchEmail():
             for part in msg.walk():
                 if part.get_content_maintype() == 'multipart':
                     continue
-                
+
                 if part.get('Content-disposition') is None:
                     continue
-                
+
                 file_name = Path(part.get_filename())
                 if bool(file_name):
                     att_dir = Path(download_folder)
@@ -93,40 +96,41 @@ class FetchEmail():
                     if str(file_path.suffix) in ['.txt', '.xls', '.csv', '.pdf']:
                         if value.__contains__('mtn'):
                             if self.check_file_name(file_name.stem, ['mnp']):
-                                #convert file to .txt
-                                #upload to s3 as specified name format
+                                # convert file to .txt
+                                # upload to s3 as specified name format
                                 pass
                             if self.check_file_name(file_name.stem, ['dnd']):
-                                #convert file to .txt
-                                #upload to s3 as specified name format
+                                # convert file to .txt
+                                # upload to s3 as specified name format
                                 pass
 
                         elif value.__contains__('airtel'):
                             if self.check_file_name(file_name.stem, ['mnp']):
-                                #convert file to .txt
-                                #upload to s3 as specified name format
+                                # convert file to .txt
+                                # upload to s3 as specified name format
                                 pass
                             if self.check_file_name(file_name.stem, ['dnd']):
-                                #convert file to .txt
-                                #upload to s3 as specified name format
+                                # convert file to .txt
+                                # upload to s3 as specified name format
                                 pass
 
                         elif value.__contains__('9mobile'):
                             if self.check_file_name(file_name.stem, ['mnp']):
-                                #convert file to .txt
-                                #upload to s3 as specified name format
+                                # convert file to .txt
+                                # upload to s3 as specified name format
                                 pass
                             if self.check_file_name(file_name.stem, ['dnd']):
-                                #convert file to .txt
-                                #upload to s3 as specified name format
+                                # convert file to .txt
+                                # upload to s3 as specified name format
                                 pass
-                        
+
                         else:
                             if att_dir.exists() == False:
                                 att_dir.mkdir()
-                            file_path.write_bytes(part.get_payload(decode=True))
+                            file_path.write_bytes(
+                                part.get_payload(decode=True))
                             self.convert_files(att_dir)
-    
+
         if(isinstance(att_dir, Path)):
             return att_dir.absolute()
 
@@ -156,8 +160,10 @@ class FetchEmail():
                     con_dir.mkdir()
                 con_dir.joinpath(f'{path.stem}.txt').write_bytes(text)
 
+
 if __name__ == '__main__':
-    mail = FetchEmail('imap.gmail.com', 'bshobanke@terragonltd.com', 'uedijmdxacoxmlos')
+    mail = FetchEmail('imap.gmail.com',
+                      'bshobanke@terragonltd.com', 'uedijmdxacoxmlos')
     # respond = mail.download_attachments('Rajesh Chopra')
     result = mail.download_attachments('bshobanke2@gmail.com')
     print(result)
