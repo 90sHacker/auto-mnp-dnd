@@ -1,4 +1,5 @@
-import imaplib, email
+import imaplib
+import email
 import textract
 import tempfile
 import boto3
@@ -7,6 +8,20 @@ from pathlib import Path
 from email.header import decode_header
 from datetime import datetime
 from dateutil.parser import *
+from dotenv import load_dotenv
+
+load_dotenv()
+
+base_mnp= os.environ.get("BASE_MNP")
+base_dnd= os.environ.get("BASE_DND")
+email_username= os.environ.get("EMAIL_USERNAME")
+email_password= os.environ.get("EMAIL_PASSWORD")
+aws_access_key= os.environ.get("ACCESS_KEY")
+aws_secret_key= os.environ.get("SECRET_KEY")
+
+
+
+
 
 class FetchEmail():
 
@@ -56,7 +71,7 @@ class FetchEmail():
                 print("No email found")
                 self.close_connection()
                 exit()
-            
+
             msgs.append(data[0][1])
             response, data = self.connection.store(message_id, '+FLAGS', '\\Seen')
 
@@ -84,20 +99,22 @@ class FetchEmail():
             for part in msg.walk():
                 if part.get_content_maintype() == 'multipart':
                     continue
-                
+
                 if part.get('Content-disposition') is None:
                     continue
                 
                 file_name = part.get_filename()
                 if bool(file_name):
                     if value.__contains__('mtn'):
-                        file_name = 'mtn' + file_name
+                        file_name = 'mtn_' + file_name
                     elif value.__contains__('glo'):
-                        file_name = 'glo' + file_name
+                        file_name = 'glo_' + file_name
                     elif value.__contains__('airtel'):
-                        file_name = 'airtel' + file_name
+                        file_name = 'airtel_' + file_name
                     elif value.__contains__('9mobile'):
-                        file_name = '9mobile' + file_name
+                        file_name = '9mobile_' + file_name
+                    elif value.__contains__('gmail'):
+                        file_name = 'gmail_' + file_name
                     
                     file_name = Path(file_name)
                     att_dir = Path(download_folder)
@@ -130,7 +147,7 @@ class FetchEmail():
         """
         con_dir = Path(convert_folder)
         file_path = Path(file_path)
-        s3 = boto3.client('s3')
+        s3 = boto3.client('s3', aws_access_key, aws_secret_key)
         dt = datetime.now()
 
         for path in file_path.rglob('*.*'):
@@ -141,10 +158,15 @@ class FetchEmail():
                     temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
                     temp.write(text)
                     #upload to s3 as specified name format
-                    with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/telco_mnp/email_raw/telco=mtn/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                    temp.close()
-                    os.unlink(temp)
+                    try:
+                        with open(Path(temp.name), "rb") as tp:
+                            s3.upload_fileobj(tp, f'{base_mnp}mtn/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        print('Upload successful!')
+                        temp.close()
+                        os.unlink(temp)
+                    except FileNotFoundError:
+                        print('File not found')
+            
 
                 if self.check_file_name(path.stem, ['dnd']):
                     #convert file to .txt
@@ -152,10 +174,14 @@ class FetchEmail():
                     temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
                     temp.write(text)
                     #upload to s3 as specified name format
-                    with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/dnd_blacklist/email_raw/telco=mtn/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                    temp.close()
-                    os.unlink(temp)
+                    try:
+                        with open(Path(temp.name), "rb") as tp:
+                            s3.upload_fileobj(tp, f'{base_dnd}mtn/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        print('Upload successful!')
+                        temp.close()
+                        os.unlink(temp)
+                    except FileNotFoundError:
+                        print('File not found')
 
             elif path.stem.__contains__('airtel'):
                 if self.check_file_name(path.stem, ['mnp']):
@@ -164,10 +190,14 @@ class FetchEmail():
                     temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
                     temp.write(text)
                     #upload to s3 as specified name format
-                    with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/telco_mnp/email_raw/telco=airtel/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                    temp.close()
-                    os.unlink(temp)
+                    try:
+                        with open(Path(temp.name), "rb") as tp:
+                            s3.upload_fileobj(tp, f'{base_mnp}airtel/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        print('Upload successful!')
+                        temp.close()
+                        os.unlink(temp)
+                    except FileNotFoundError:
+                        print('File not found')
 
                 if self.check_file_name(path.stem, ['dnd']):
                     #convert file to .txt
@@ -175,10 +205,14 @@ class FetchEmail():
                     temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
                     temp.write(text)
                     #upload to s3 as specified name format
-                    with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/dnd_blacklist/email_raw/telco=airtel/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                    temp.close()
-                    os.unlink(temp)
+                    try:
+                        with open(Path(temp.name), "rb") as tp:
+                            s3.upload_fileobj(tp, f'{base_dnd}airtel/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        print('Upload successful!')
+                        temp.close()
+                        os.unlink(temp)
+                    except FileNotFoundError:
+                        print('File not found')
 
             elif path.stem.__contains__('glo'):
                 if self.check_file_name(path.stem, ['mnp']):
@@ -187,10 +221,14 @@ class FetchEmail():
                     temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
                     temp.write(text)
                     #upload to s3 as specified name format
-                    with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/telco_mnp/email_raw/telco=glo/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                    temp.close()
-                    os.unlink(temp)
+                    try:
+                        with open(Path(temp.name), "rb") as tp:
+                            s3.upload_fileobj(tp, f'{base_mnp}glo/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        print('Upload successful!')
+                        temp.close()
+                        os.unlink(temp)
+                    except FileNotFoundError:
+                        print('File not found')
 
                 if self.check_file_name(path.stem, ['dnd']):
                     #convert file to .txt
@@ -198,10 +236,14 @@ class FetchEmail():
                     temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
                     temp.write(text)
                     #upload to s3 as specified name format
-                    with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/dnd_blacklist/email_raw/telco=glo/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                    temp.close()
-                    os.unlink(temp)
+                    try:
+                        with open(Path(temp.name), "rb") as tp:
+                            s3.upload_fileobj(tp, f'{base_dnd}glo/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        print('Upload successful!')
+                        temp.close()
+                        os.unlink(temp)
+                    except FileNotFoundError:
+                        print('File not found')
             
             elif path.stem.__contains__('9mobile'):
                 if self.check_file_name(path.stem, ['mnp']):
@@ -210,10 +252,15 @@ class FetchEmail():
                     temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
                     temp.write(text)
                     #upload to s3 as specified name format
-                    with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/telco_mnp/email_raw/telco=9mobile/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                    temp.close()
-                    os.unlink(temp)
+                    try:
+                        with open(Path(temp.name), "rb") as tp:
+                            s3.upload_fileobj(tp, f'{base_mnp}9mobile/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        print('Upload successful!')
+                        temp.close()
+                        os.unlink(temp)
+                    except FileNotFoundError:
+                        print('File not found')
+                    
 
                 if self.check_file_name(path.stem, ['dnd']):
                     #convert file to .txt
@@ -221,10 +268,14 @@ class FetchEmail():
                     temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
                     temp.write(text)
                     #upload to s3 as specified name format
-                    with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/dnd_blacklist/email_raw/telco=9mobile/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                    temp.close()
-                    os.unlink(temp)
+                    try:
+                        with open(Path(temp.name), "rb") as tp:
+                            s3.upload_fileobj(tp, f'{base_dnd}9mobile/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        print('Upload successful!')
+                        temp.close()
+                        os.unlink(temp)
+                    except FileNotFoundError:
+                        print('File not found')
             else:
                 if path.stem != '.DS_Store':
                     text = textract.process(str(path.absolute()))
@@ -233,11 +284,14 @@ class FetchEmail():
                         con_dir.mkdir()
                     con_dir.joinpath(f'{path.stem}.txt').write_bytes(text)
 
+
 if __name__ == '__main__':
-    mail = FetchEmail('imap.gmail.com', 'bshobanke@terragonltd.com', 'uedijmdxacoxmlos')
+    mail = FetchEmail('imap.gmail.com',
+                      email_username, email_password)
     # respond = mail.download_attachments('Rajesh Chopra')
+    
     result = mail.download_attachments('bshobanke2@gmail.com')
     print(result)
-    mail.convert_files(result)
+    # mail.convert_files(result)
 
     mail.close_connection()
