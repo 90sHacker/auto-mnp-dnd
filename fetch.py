@@ -160,10 +160,14 @@ class FetchEmail():
                     temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
                     temp.write(text)
                     #upload to s3 as specified name format
-                    with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, mtn_mnp, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                    temp.close()
-                    os.unlink(temp)
+                    try:
+                        with open(Path(temp.name), "rb") as tp:
+                            s3.upload_fileobj(tp, mtn_mnp, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        temp.close()
+                        os.unlink(temp)
+                        print('Upload successful!')
+                    except FileNotFoundError:
+                        print('File not found')
 
                 if self.check_file_name(path.stem, ['dnd']):
                     #convert file to .txt
@@ -171,10 +175,14 @@ class FetchEmail():
                     temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
                     temp.write(text)
                     #upload to s3 as specified name format
-                    with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, mtn_dnd, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                    temp.close()
-                    os.unlink(temp)
+                    try:
+                        with open(Path(temp.name), "rb") as tp:
+                            s3.upload_fileobj(tp, mtn_dnd, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        temp.close()
+                        os.unlink(temp)
+                        print('Upload successful!')
+                    except FileNotFoundError:
+                        print('File not found')
 
             elif path.stem.__contains__('airtel'):
                 if self.check_file_name(path.stem, ['mnp']):
@@ -183,10 +191,14 @@ class FetchEmail():
                     temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
                     temp.write(text)
                     #upload to s3 as specified name format
-                    with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, airtel_mnp, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                    temp.close()
-                    os.unlink(temp)
+                    try:
+                        with open(Path(temp.name), "rb") as tp:
+                            s3.upload_fileobj(tp, airtel_mnp, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        temp.close()
+                        os.unlink(temp)
+                        print('Upload successful!')
+                    except FileNotFoundError:
+                        print('File not found')
 
                 if self.check_file_name(path.stem, ['dnd']):
                     #convert file to .txt
@@ -194,10 +206,14 @@ class FetchEmail():
                     temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
                     temp.write(text)
                     #upload to s3 as specified name format
-                    with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, airtel_dnd, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                    temp.close()
-                    os.unlink(temp)
+                    try:
+                        with open(Path(temp.name), "rb") as tp:
+                            s3.upload_fileobj(tp, airtel_dnd, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        temp.close()
+                        os.unlink(temp)
+                        print('Upload successful!')
+                    except FileNotFoundError:
+                        print('File not found')
 
             elif path.stem.__contains__('glo'):
                 if self.check_file_name(path.stem, ['mnp']):
@@ -206,10 +222,14 @@ class FetchEmail():
                     temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
                     temp.write(text)
                     #upload to s3 as specified name format
-                    with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, glo_mnp, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                    temp.close()
-                    os.unlink(temp)
+                    try:
+                        with open(Path(temp.name), "rb") as tp:
+                            s3.upload_fileobj(tp, glo_mnp, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        print('Upload successful!')
+                        temp.close()
+                        os.unlink(temp)
+                    except FileNotFoundError:
+                        print('File not found')
 
                 if self.check_file_name(path.stem, ['dnd']):
                     #convert file to .txt
@@ -217,10 +237,14 @@ class FetchEmail():
                     temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
                     temp.write(text)
                     #upload to s3 as specified name format
-                    with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, glo_dnd, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                    temp.close()
-                    os.unlink(temp)
+                    try:
+                        with open(Path(temp.name), "rb") as tp:
+                            s3.upload_fileobj(tp, glo_dnd, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        print('Upload successful!')
+                        temp.close()
+                        os.unlink(temp)
+                    except FileNotFoundError:
+                        print('File not found')
             
             elif path.stem.__contains__('9mobile'):
                 if self.check_file_name(path.stem, ['mnp']):
@@ -229,10 +253,15 @@ class FetchEmail():
                     temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
                     temp.write(text)
                     #upload to s3 as specified name format
-                    with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, mobile_mnp, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                    temp.close()
-                    os.unlink(temp)
+                    try:
+                        with open(Path(temp.name), "rb") as tp:
+                            s3.upload_fileobj(tp, mobile_mnp, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        print('Upload successful!')
+                        temp.close()
+                        os.unlink(temp)
+                    except FileNotFoundError:
+                        print('File not found')
+                    
 
                 if self.check_file_name(path.stem, ['dnd']):
                     #convert file to .txt
@@ -240,10 +269,14 @@ class FetchEmail():
                     temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
                     temp.write(text)
                     #upload to s3 as specified name format
-                    with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, mobile_dnd, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
-                    temp.close()
-                    os.unlink(temp)
+                    try:
+                        with open(Path(temp.name), "rb") as tp:
+                            s3.upload_fileobj(tp, mobile_dnd, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        print('Upload successful!')
+                        temp.close()
+                        os.unlink(temp)
+                    except FileNotFoundError:
+                        print('File not found')
             else:
                 if path.stem != '.DS_Store':
                     text = textract.process(str(path.absolute()))
