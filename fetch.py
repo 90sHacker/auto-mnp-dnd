@@ -21,6 +21,8 @@ aws_secret_key= os.environ.get("SECRET_KEY")
 
 
 
+
+
 class FetchEmail():
 
     def __init__(self, mail_server, username, password):
@@ -104,13 +106,15 @@ class FetchEmail():
                 file_name = part.get_filename()
                 if bool(file_name):
                     if value.__contains__('mtn'):
-                        file_name = 'mtn' + file_name
+                        file_name = 'mtn_' + file_name
                     elif value.__contains__('glo'):
-                        file_name = 'glo' + file_name
+                        file_name = 'glo_' + file_name
                     elif value.__contains__('airtel'):
-                        file_name = 'airtel' + file_name
+                        file_name = 'airtel_' + file_name
                     elif value.__contains__('9mobile'):
-                        file_name = '9mobile' + file_name
+                        file_name = '9mobile_' + file_name
+                    elif value.__contains__('gmail'):
+                        file_name = 'gmail_' + file_name
                     
                     file_name = Path(file_name)
                     att_dir = Path(download_folder)
@@ -285,8 +289,9 @@ if __name__ == '__main__':
     mail = FetchEmail('imap.gmail.com',
                       email_username, email_password)
     # respond = mail.download_attachments('Rajesh Chopra')
+    
     result = mail.download_attachments('bshobanke2@gmail.com')
     print(result)
-    mail.convert_files(result)
+    # mail.convert_files(result)
 
     mail.close_connection()
