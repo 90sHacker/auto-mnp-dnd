@@ -8,7 +8,6 @@ from pathlib import Path
 from email.header import decode_header
 from datetime import datetime
 from dateutil.parser import *
-from decouple import config
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -21,6 +20,10 @@ glo_mnp= os.environ.get("GLO_MNP")
 glo_dnd= os.environ.get("GLO_DND")
 mobile_mnp= os.environ.get("9MOBILE_MNP")
 mobile_dnd= os.environ.get("9MOBILE_DND")
+email_username= os.environ.get("EMAIL_USERNAME")
+email_password= os.environ.get("EMAIL_PASSWORD")
+aws_access_key= os.environ.get("ACCESS_KEY")
+aws_secret_key= os.environ.get("SECRET_KEY")
 
 
 
@@ -146,7 +149,7 @@ class FetchEmail():
         """
         con_dir = Path(convert_folder)
         file_path = Path(file_path)
-        s3 = boto3.client('s3')
+        s3 = boto3.client('s3', aws_access_key, aws_secret_key)
         dt = datetime.now()
 
         for path in file_path.rglob('*.*'):
