@@ -1,4 +1,4 @@
-import boto3  # pip install boto3
+import boto3  # pip3 install boto3
 from pathlib import Path
 
 # Let's use Amazon S3

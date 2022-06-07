@@ -8,6 +8,20 @@ from pathlib import Path
 from email.header import decode_header
 from datetime import datetime
 from dateutil.parser import *
+from decouple import config
+from dotenv import load_dotenv
+
+load_dotenv()
+
+mtn_mnp= os.environ.get("MTN_MNP")
+mtn_dnd= os.environ.get("MTN_DND")
+airtel_mnp= os.environ.get("AIRTEL_MNP")
+airtel_dnd= os.environ.get("AIRTEL_DND")
+glo_mnp= os.environ.get("GLO_MNP")
+glo_dnd= os.environ.get("GLO_DND")
+mobile_mnp= os.environ.get("9MOBILE_MNP")
+mobile_dnd= os.environ.get("9MOBILE_DND")
+
 
 
 class FetchEmail():
@@ -144,7 +158,7 @@ class FetchEmail():
                     temp.write(text)
                     #upload to s3 as specified name format
                     with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/telco_mnp/email_raw/telco=mtn/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        s3.upload_fileobj(tp, mtn_mnp, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                     temp.close()
                     os.unlink(temp)
 
@@ -155,7 +169,7 @@ class FetchEmail():
                     temp.write(text)
                     #upload to s3 as specified name format
                     with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/dnd_blacklist/email_raw/telco=mtn/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        s3.upload_fileobj(tp, mtn_dnd, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                     temp.close()
                     os.unlink(temp)
 
@@ -167,7 +181,7 @@ class FetchEmail():
                     temp.write(text)
                     #upload to s3 as specified name format
                     with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/telco_mnp/email_raw/telco=airtel/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        s3.upload_fileobj(tp, airtel_mnp, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                     temp.close()
                     os.unlink(temp)
 
@@ -178,7 +192,7 @@ class FetchEmail():
                     temp.write(text)
                     #upload to s3 as specified name format
                     with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/dnd_blacklist/email_raw/telco=airtel/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        s3.upload_fileobj(tp, airtel_dnd, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                     temp.close()
                     os.unlink(temp)
 
@@ -190,7 +204,7 @@ class FetchEmail():
                     temp.write(text)
                     #upload to s3 as specified name format
                     with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/telco_mnp/email_raw/telco=glo/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        s3.upload_fileobj(tp, glo_mnp, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                     temp.close()
                     os.unlink(temp)
 
@@ -201,7 +215,7 @@ class FetchEmail():
                     temp.write(text)
                     #upload to s3 as specified name format
                     with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/dnd_blacklist/email_raw/telco=glo/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        s3.upload_fileobj(tp, glo_dnd, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                     temp.close()
                     os.unlink(temp)
             
@@ -213,7 +227,7 @@ class FetchEmail():
                     temp.write(text)
                     #upload to s3 as specified name format
                     with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/telco_mnp/email_raw/telco=9mobile/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        s3.upload_fileobj(tp, mobile_mnp, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                     temp.close()
                     os.unlink(temp)
 
@@ -224,7 +238,7 @@ class FetchEmail():
                     temp.write(text)
                     #upload to s3 as specified name format
                     with open(Path(temp.name), "rb") as tp:
-                        s3.upload_fileobj(tp, 's3://data-lake-v2/raw_batch_data/dnd_blacklist/email_raw/telco=9mobile/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        s3.upload_fileobj(tp, mobile_dnd, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                     temp.close()
                     os.unlink(temp)
             else:
