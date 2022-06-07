@@ -12,14 +12,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-mtn_mnp= os.environ.get("MTN_MNP")
-mtn_dnd= os.environ.get("MTN_DND")
-airtel_mnp= os.environ.get("AIRTEL_MNP")
-airtel_dnd= os.environ.get("AIRTEL_DND")
-glo_mnp= os.environ.get("GLO_MNP")
-glo_dnd= os.environ.get("GLO_DND")
-mobile_mnp= os.environ.get("9MOBILE_MNP")
-mobile_dnd= os.environ.get("9MOBILE_DND")
+base_mnp= os.environ.get("BASE_MNP")
+base_dnd= os.environ.get("BASE_DND")
 email_username= os.environ.get("EMAIL_USERNAME")
 email_password= os.environ.get("EMAIL_PASSWORD")
 aws_access_key= os.environ.get("ACCESS_KEY")
@@ -162,12 +156,13 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
-                            s3.upload_fileobj(tp, mtn_mnp, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                            s3.upload_fileobj(tp, f'{base_mnp}mtn/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        print('Upload successful!')
                         temp.close()
                         os.unlink(temp)
-                        print('Upload successful!')
                     except FileNotFoundError:
                         print('File not found')
+            
 
                 if self.check_file_name(path.stem, ['dnd']):
                     #convert file to .txt
@@ -177,10 +172,10 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
-                            s3.upload_fileobj(tp, mtn_dnd, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                            s3.upload_fileobj(tp, f'{base_dnd}mtn/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        print('Upload successful!')
                         temp.close()
                         os.unlink(temp)
-                        print('Upload successful!')
                     except FileNotFoundError:
                         print('File not found')
 
@@ -193,10 +188,10 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
-                            s3.upload_fileobj(tp, airtel_mnp, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                            s3.upload_fileobj(tp, f'{base_mnp}airtel/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        print('Upload successful!')
                         temp.close()
                         os.unlink(temp)
-                        print('Upload successful!')
                     except FileNotFoundError:
                         print('File not found')
 
@@ -208,10 +203,10 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
-                            s3.upload_fileobj(tp, airtel_dnd, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                            s3.upload_fileobj(tp, f'{base_dnd}airtel/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                        print('Upload successful!')
                         temp.close()
                         os.unlink(temp)
-                        print('Upload successful!')
                     except FileNotFoundError:
                         print('File not found')
 
@@ -224,7 +219,7 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
-                            s3.upload_fileobj(tp, glo_mnp, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                            s3.upload_fileobj(tp, f'{base_mnp}glo/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
                         temp.close()
                         os.unlink(temp)
@@ -239,7 +234,7 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
-                            s3.upload_fileobj(tp, glo_dnd, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                            s3.upload_fileobj(tp, f'{base_dnd}glo/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
                         temp.close()
                         os.unlink(temp)
@@ -255,7 +250,7 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
-                            s3.upload_fileobj(tp, mobile_mnp, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                            s3.upload_fileobj(tp, f'{base_mnp}9mobile/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
                         temp.close()
                         os.unlink(temp)
@@ -271,7 +266,7 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
-                            s3.upload_fileobj(tp, mobile_dnd, f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                            s3.upload_fileobj(tp, f'{base_dnd}9mobile/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
                         temp.close()
                         os.unlink(temp)
@@ -288,7 +283,7 @@ class FetchEmail():
 
 if __name__ == '__main__':
     mail = FetchEmail('imap.gmail.com',
-                      'bshobanke@terragonltd.com', 'uedijmdxacoxmlos')
+                      email_username, email_password)
     # respond = mail.download_attachments('Rajesh Chopra')
     result = mail.download_attachments('bshobanke2@gmail.com')
     print(result)
