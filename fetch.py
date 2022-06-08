@@ -288,12 +288,18 @@ class FetchEmail():
 
 
 if __name__ == '__main__':
-    mail = FetchEmail('imap.gmail.com',
-                      email_username, email_password)
-    # respond = mail.download_attachments('Rajesh Chopra')
+    dnd_mail = FetchEmail('imap.gmail.com',
+                      dnd_username, dnd_password)
     
-    result = mail.download_attachments('bshobanke2@gmail.com')
-    print(result)
-    # mail.convert_files(result)
+    mnp_mail = FetchEmail('imap.gmail.com',
+                      mnp_username, mnp_password)
 
-    mail.close_connection()
+    dnd_result = dnd_mail.download_attachments('bshobanke2@gmail.com')
+    print(dnd_result)
+    mnp_result = mnp_mail.download_attachments('bshobanke2@gmail.com')
+    print(mnp_result)
+    # dnd_mail.convert_files(dnd_result)
+    # mnp_mail.convert_files(mnp_result)
+
+    dnd_mail.close_connection()
+    mnp_mail.close_connection()
