@@ -14,8 +14,10 @@ load_dotenv()
 
 base_mnp= os.environ.get("BASE_MNP")
 base_dnd= os.environ.get("BASE_DND")
-email_username= os.environ.get("EMAIL_USERNAME")
-email_password= os.environ.get("EMAIL_PASSWORD")
+dnd_username= os.environ.get("DND_USERNAME")
+dnd_password= os.environ.get("DND_PASSWORD")
+mnp_username= os.environ.get("MNP_USERNAME")
+mnp_password= os.environ.get("MNP_PASSWORD")
 aws_access_key= os.environ.get("ACCESS_KEY")
 aws_secret_key= os.environ.get("SECRET_KEY")
 
