@@ -149,7 +149,7 @@ class FetchEmail():
         """
         con_dir = Path(convert_folder)
         file_path = Path(file_path)
-        s3 = boto3.client('s3', aws_access_key, aws_secret_key)
+        s3 = boto3.client('s3')
         dt = datetime.now()
 
         for path in file_path.rglob('*.*'):
@@ -157,15 +157,15 @@ class FetchEmail():
                 if self.check_file_name(path.stem, ['mnp']):
                     #convert file to .txt
                     text = textract.process(str(path.absolute()))
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
+                    temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
                     temp.write(text)
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
                             s3.upload_fileobj(tp, f'{base_mnp}mtn/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
-                        temp.close()
-                        os.unlink(temp)
+                        # temp.close()
+                        # os.unlink(temp)
                     except FileNotFoundError:
                         print('File not found')
             
@@ -173,15 +173,15 @@ class FetchEmail():
                 if self.check_file_name(path.stem, ['dnd']):
                     #convert file to .txt
                     text = textract.process(str(path.absolute()))
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
+                    temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
                     temp.write(text)
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
                             s3.upload_fileobj(tp, f'{base_dnd}mtn/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
-                        temp.close()
-                        os.unlink(temp)
+                        # temp.close()
+                        # os.unlink(temp)
                     except FileNotFoundError:
                         print('File not found')
 
@@ -189,22 +189,22 @@ class FetchEmail():
                 if self.check_file_name(path.stem, ['mnp']):
                     #convert file to .txt
                     text = textract.process(str(path.absolute()))
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
+                    temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
                     temp.write(text)
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
                             s3.upload_fileobj(tp, f'{base_mnp}airtel/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
-                        temp.close()
-                        os.unlink(temp)
+                        # temp.close()
+                        # os.unlink(temp)
                     except FileNotFoundError:
                         print('File not found')
 
                 if self.check_file_name(path.stem, ['dnd']):
                     #convert file to .txt
                     text = textract.process(str(path.absolute()))
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
+                    temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
                     temp.write(text)
                     #upload to s3 as specified name format
                     try:
@@ -220,30 +220,30 @@ class FetchEmail():
                 if self.check_file_name(path.stem, ['mnp']):
                     #convert file to .txt
                     text = textract.process(str(path.absolute()))
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
+                    temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
                     temp.write(text)
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
                             s3.upload_fileobj(tp, f'{base_mnp}glo/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
-                        temp.close()
-                        os.unlink(temp)
+                        # temp.close()
+                        # os.unlink(temp)
                     except FileNotFoundError:
                         print('File not found')
 
                 if self.check_file_name(path.stem, ['dnd']):
                     #convert file to .txt
                     text = textract.process(str(path.absolute()))
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
+                    temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
                     temp.write(text)
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
                             s3.upload_fileobj(tp, f'{base_dnd}glo/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
-                        temp.close()
-                        os.unlink(temp)
+                        # temp.close()
+                        # os.unlink(temp)
                     except FileNotFoundError:
                         print('File not found')
             
@@ -251,15 +251,15 @@ class FetchEmail():
                 if self.check_file_name(path.stem, ['mnp']):
                     #convert file to .txt
                     text = textract.process(str(path.absolute()))
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
+                    temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
                     temp.write(text)
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
                             s3.upload_fileobj(tp, f'{base_mnp}9mobile/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
-                        temp.close()
-                        os.unlink(temp)
+                        # temp.close()
+                        # os.unlink(temp)
                     except FileNotFoundError:
                         print('File not found')
                     
@@ -267,15 +267,15 @@ class FetchEmail():
                 if self.check_file_name(path.stem, ['dnd']):
                     #convert file to .txt
                     text = textract.process(str(path.absolute()))
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=path.suffix)
+                    temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
                     temp.write(text)
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
                             s3.upload_fileobj(tp, f'{base_dnd}9mobile/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
-                        temp.close()
-                        os.unlink(temp)
+                        # temp.close()
+                        # os.unlink(temp)
                     except FileNotFoundError:
                         print('File not found')
             else:
