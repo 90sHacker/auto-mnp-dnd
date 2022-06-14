@@ -1,6 +1,5 @@
 import imaplib
 import email
-from typing import final
 import textract
 import tempfile
 import boto3
