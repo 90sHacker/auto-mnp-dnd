@@ -212,8 +212,8 @@ class FetchEmail():
                         with open(Path(temp.name), "rb") as tp:
                             bucket.upload_fileobj(tp, f'{base_dnd}airtel/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
-                        temp.close()
-                        os.unlink(temp)
+                        # temp.close()
+                        # os.unlink(temp)
                     except FileNotFoundError:
                         print('File not found')
 
