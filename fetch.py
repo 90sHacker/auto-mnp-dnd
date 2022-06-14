@@ -294,12 +294,18 @@ if __name__ == '__main__':
     mnp_mail = FetchEmail('imap.gmail.com',
                       mnp_username, mnp_password)
 
-    dnd_result = dnd_mail.download_attachments('bshobanke2@gmail.com')
-    print(dnd_result)
-    mnp_result = mnp_mail.download_attachments('bshobanke2@gmail.com')
-    print(mnp_result)
-    # dnd_mail.convert_files(dnd_result)
-    # mnp_mail.convert_files(mnp_result)
+    airtel_dnd_result = dnd_mail.download_attachments('airtel-dnd@terragonltd.com')
+    print(airtel_dnd_result)
+    mtn_dnd_result = dnd_mail.download_attachments('sdp@mtn.com')
+    print(mtn_dnd_result)
+    
+    dnd_mail.convert_files(airtel_dnd_result)
+    dnd_mail.convert_files(mtn_dnd_result)
+
+    mtn_mnp_result = mnp_mail.download_attachments('DAAS_note_ng@mtn.com')
+    print(mtn_mnp_result)
+
+    mnp_mail.convert_files(mtn_mnp_result)
 
     dnd_mail.close_connection()
     mnp_mail.close_connection()
