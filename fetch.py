@@ -149,7 +149,8 @@ class FetchEmail():
         """
         con_dir = Path(convert_folder)
         file_path = Path(file_path)
-        s3 = boto3.client('s3')
+        s3 = boto3.resource('s3')
+        bucket = s3.Bucket('data-lake-v2')
         dt = datetime.now()
 
         for path in file_path.rglob('*.*'):
@@ -162,7 +163,7 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
-                            s3.upload_fileobj(tp, f'{base_mnp}mtn/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                            s3.upload_fileobj(tp, f'{base_mnp}mtn/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
                         # temp.close()
                         # os.unlink(temp)
@@ -178,7 +179,7 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
-                            s3.upload_fileobj(tp, f'{base_dnd}mtn/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                            s3.upload_fileobj(tp, f'{base_dnd}mtn/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
                         # temp.close()
                         # os.unlink(temp)
@@ -194,7 +195,7 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
-                            s3.upload_fileobj(tp, f'{base_mnp}airtel/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                            s3.upload_fileobj(tp, f'{base_mnp}airtel/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
                         # temp.close()
                         # os.unlink(temp)
@@ -209,7 +210,7 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
-                            s3.upload_fileobj(tp, f'{base_dnd}airtel/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                            s3.upload_fileobj(tp, f'{base_dnd}airtel/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
                         temp.close()
                         os.unlink(temp)
@@ -225,7 +226,7 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
-                            s3.upload_fileobj(tp, f'{base_mnp}glo/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                            s3.upload_fileobj(tp, f'{base_mnp}glo/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
                         # temp.close()
                         # os.unlink(temp)
@@ -240,7 +241,7 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
-                            s3.upload_fileobj(tp, f'{base_dnd}glo/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                            s3.upload_fileobj(tp, f'{base_dnd}glo/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
                         # temp.close()
                         # os.unlink(temp)
@@ -256,7 +257,7 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
-                            s3.upload_fileobj(tp, f'{base_mnp}9mobile/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                            s3.upload_fileobj(tp, f'{base_mnp}9mobile/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
                         # temp.close()
                         # os.unlink(temp)
@@ -272,7 +273,7 @@ class FetchEmail():
                     #upload to s3 as specified name format
                     try:
                         with open(Path(temp.name), "rb") as tp:
-                            s3.upload_fileobj(tp, f'{base_dnd}9mobile/', f'{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
+                            s3.upload_fileobj(tp, f'{base_dnd}9mobile/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt')
                         print('Upload successful!')
                         # temp.close()
                         # os.unlink(temp)
