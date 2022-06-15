@@ -162,13 +162,19 @@ class FetchEmail():
                     temp.write(text)
                     #upload to s3 as specified name format
                     try:
-                        with open(Path(temp.name), "rb") as tp:
-                            final_data_path = f'{base_mnp}mtn/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                            data_write = bucket.upload_fileobj(tp, final_data_path)
-                            if data_write:
-                                print('Upload successful!')
-                            print("Data Path ==> {} ... \n".format(final_data_path))
-                            print("Final data object ", data_write)
+                        final_data_path = f'{base_mnp}mtn/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
+                        data_write = bucket.upload_file(Path(temp.name), final_data_path)
+                        if data_write is None:
+                            print('Upload successful!')
+                        print("Data Path ==> {} ... \n".format(final_data_path))
+                        print("Final data object ", data_write)
+                        # with open(Path(temp.name), "rb") as tp:
+                        #     final_data_path = f'{base_mnp}mtn/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
+                        #     data_write = bucket.upload_fileobj(tp, final_data_path)
+                        #     if data_write:
+                        #         print('Upload successful!')
+                        #     print("Data Path ==> {} ... \n".format(final_data_path))
+                        #     print("Final data object ", data_write)
                         # temp.close()
                         # os.unlink(temp)
                     except FileNotFoundError:
@@ -182,13 +188,19 @@ class FetchEmail():
                     temp.write(text)
                     #upload to s3 as specified name format
                     try:
-                        with open(Path(temp.name), "rb") as tp:
-                            final_data_path = f'{base_dnd}mtn/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                            data_write = bucket.upload_fileobj(tp, final_data_path)
-                            if data_write:
-                                print('Upload successful!')
-                            print("Data Path ==> {} ... \n".format(final_data_path))
-                            print("Final data object ", data_write)
+                        final_data_path = f'{base_dnd}mtn/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
+                        data_write = bucket.upload_file(Path(temp.name), final_data_path)
+                        if data_write is None:
+                            print('Upload successful!')
+                        print("Data Path ==> {} ... \n".format(final_data_path))
+                        print("Final data object ", data_write)
+                        # with open(Path(temp.name), "rb") as tp:
+                        #     final_data_path = f'{base_dnd}mtn/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
+                        #     data_write = bucket.upload_fileobj(tp, final_data_path)
+                        #     if data_write:
+                        #         print('Upload successful!')
+                        #     print("Data Path ==> {} ... \n".format(final_data_path))
+                        #     print("Final data object ", data_write)
                         # temp.close()
                         # os.unlink(temp)
                     except FileNotFoundError:
@@ -202,13 +214,19 @@ class FetchEmail():
                     temp.write(text)
                     #upload to s3 as specified name format
                     try:
-                        with open(Path(temp.name), "rb") as tp:
-                            final_data_path = f'{base_mnp}airtel/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                            data_write = bucket.upload_fileobj(tp, final_data_path)
-                            if data_write:
-                                print('Upload successful!')
-                            print("Data Path ==> {} ... \n".format(final_data_path))
-                            print("Final data object ", data_write)
+                        final_data_path = f'{base_mnp}airtel/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
+                        data_write = bucket.upload_file(Path(temp.name), final_data_path)
+                        if data_write is None:
+                            print('Upload successful!')
+                        print("Data Path ==> {} ... \n".format(final_data_path))
+                        print("Final data object ", data_write)
+                        # with open(Path(temp.name), "rb") as tp:
+                        #     final_data_path = f'{base_mnp}airtel/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
+                        #     data_write = bucket.upload_fileobj(tp, final_data_path)
+                        #     if data_write:
+                        #         print('Upload successful!')
+                        #     print("Data Path ==> {} ... \n".format(final_data_path))
+                        #     print("Final data object ", data_write)
                         # temp.close()
                         # os.unlink(temp)
                     except FileNotFoundError:
@@ -221,13 +239,19 @@ class FetchEmail():
                     temp.write(text)
                     #upload to s3 as specified name format
                     try:
-                        with open(Path(temp.name), "rb") as tp:
-                            final_data_path = f'{base_dnd}airtel/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                            data_write = bucket.upload_fileobj(tp, final_data_path)
-                            if data_write:
-                                print('Upload successful!')
-                            print("Data Path ==> {} ... \n".format(final_data_path))
-                            print("Final data object ", data_write)
+                        final_data_path = f'{base_dnd}airtel/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
+                        data_write = bucket.upload_file(Path(temp.name), final_data_path)
+                        if data_write is None:
+                            print('Upload successful!')
+                        print("Data Path ==> {} ... \n".format(final_data_path))
+                        print("Final data object ", data_write)
+                        # with open(Path(temp.name), "rb") as tp:
+                        #     final_data_path = f'{base_dnd}airtel/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
+                        #     data_write = bucket.upload_fileobj(tp, final_data_path)
+                        #     if data_write:
+                        #         print('Upload successful!')
+                        #     print("Data Path ==> {} ... \n".format(final_data_path))
+                        #     print("Final data object ", data_write)
                         # temp.close()
                         # os.unlink(temp)
                     except FileNotFoundError:
@@ -241,13 +265,19 @@ class FetchEmail():
                     temp.write(text)
                     #upload to s3 as specified name format
                     try:
-                        with open(Path(temp.name), "rb") as tp:
-                            final_data_path = f'{base_mnp}glo/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                            data_write = bucket.upload_fileobj(tp, final_data_path)
-                            if data_write:
-                                print('Upload successful!')
-                            print("Data Path ==> {} ... \n".format(final_data_path))
-                            print("Final data object ", data_write)
+                        final_data_path = f'{base_mnp}glo/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
+                        data_write = bucket.upload_file(Path(temp.name), final_data_path)
+                        if data_write is None:
+                            print('Upload successful!')
+                        print("Data Path ==> {} ... \n".format(final_data_path))
+                        print("Final data object ", data_write)
+                        # with open(Path(temp.name), "rb") as tp:
+                        #     final_data_path = f'{base_mnp}glo/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
+                        #     data_write = bucket.upload_fileobj(tp, final_data_path)
+                        #     if data_write:
+                        #         print('Upload successful!')
+                        #     print("Data Path ==> {} ... \n".format(final_data_path))
+                        #     print("Final data object ", data_write)
                         # temp.close()
                         # os.unlink(temp)
                     except FileNotFoundError:
@@ -260,13 +290,19 @@ class FetchEmail():
                     temp.write(text)
                     #upload to s3 as specified name format
                     try:
-                        with open(Path(temp.name), "rb") as tp:
-                            final_data_path = f'{base_dnd}glo/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                            data_write = bucket.upload_fileobj(tp, final_data_path)
-                            if data_write:
-                                print('Upload successful!')
-                            print("Data Path ==> {} ... \n".format(final_data_path))
-                            print("Final data object ", data_write)
+                        final_data_path = f'{base_dnd}glo/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
+                        data_write = bucket.upload_file(Path(temp.name), final_data_path)
+                        if data_write is None:
+                            print('Upload successful!')
+                        print("Data Path ==> {} ... \n".format(final_data_path))
+                        print("Final data object ", data_write)
+                        # with open(Path(temp.name), "rb") as tp:
+                        #     final_data_path = f'{base_dnd}glo/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
+                        #     data_write = bucket.upload_fileobj(tp, final_data_path)
+                        #     if data_write:
+                        #         print('Upload successful!')
+                        #     print("Data Path ==> {} ... \n".format(final_data_path))
+                        #     print("Final data object ", data_write)
                         # temp.close()
                         # os.unlink(temp)
                     except FileNotFoundError:
@@ -280,13 +316,19 @@ class FetchEmail():
                     temp.write(text)
                     #upload to s3 as specified name format
                     try:
-                        with open(Path(temp.name), "rb") as tp:
-                            final_data_path = f'{base_mnp}9mobile/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                            data_write = bucket.upload_fileobj(tp, final_data_path)
-                            if data_write:
-                                print('Upload successful!')
-                            print("Data Path ==> {} ... \n".format(final_data_path))
-                            print("Final data object ", data_write)
+                        final_data_path = f'{base_mnp}9mobile/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
+                        data_write = bucket.upload_file(Path(temp.name), final_data_path)
+                        if data_write is None:
+                            print('Upload successful!')
+                        print("Data Path ==> {} ... \n".format(final_data_path))
+                        print("Final data object ", data_write)
+                        # with open(Path(temp.name), "rb") as tp:
+                        #     final_data_path = f'{base_mnp}9mobile/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
+                        #     data_write = bucket.upload_fileobj(tp, final_data_path)
+                        #     if data_write:
+                        #         print('Upload successful!')
+                        #     print("Data Path ==> {} ... \n".format(final_data_path))
+                        #     print("Final data object ", data_write)
                         # temp.close()
                         # os.unlink(temp)
                     except FileNotFoundError:
@@ -300,13 +342,19 @@ class FetchEmail():
                     temp.write(text)
                     #upload to s3 as specified name format
                     try:
-                        with open(Path(temp.name), "rb") as tp:
-                            final_data_path = f'{base_dnd}9mobile/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                            data_write = bucket.upload_fileobj(tp, final_data_path)
-                            if data_write:
-                                print('Upload successful!')
-                            print("Data Path ==> {} ... \n".format(final_data_path))
-                            print("Final data object ", data_write)
+                        final_data_path = f'{base_dnd}9mobile/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
+                        data_write = bucket.upload_file(Path(temp.name), final_data_path)
+                        if data_write is None:
+                            print('Upload successful!')
+                        print("Data Path ==> {} ... \n".format(final_data_path))
+                        print("Final data object ", data_write)
+                        # with open(Path(temp.name), "rb") as tp:
+                        #     final_data_path = f'{base_dnd}9mobile/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
+                        #     data_write = bucket.upload_fileobj(tp, final_data_path)
+                        #     if data_write:
+                        #         print('Upload successful!')
+                        #     print("Data Path ==> {} ... \n".format(final_data_path))
+                        #     print("Final data object ", data_write)
                         # temp.close()
                         # os.unlink(temp)
                     except FileNotFoundError:
