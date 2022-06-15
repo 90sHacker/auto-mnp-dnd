@@ -369,24 +369,46 @@ class FetchEmail():
 
 
 if __name__ == '__main__':
-    dnd_mail = FetchEmail('imap.gmail.com',
-                      dnd_username, dnd_password)
+    # dnd_mail = FetchEmail('imap.gmail.com',
+    #                   dnd_username, dnd_password)
     
-    mnp_mail = FetchEmail('imap.gmail.com',
-                      mnp_username, mnp_password)
+    # mnp_mail = FetchEmail('imap.gmail.com',
+    #                   mnp_username, mnp_password)
 
-    airtel_dnd_result = dnd_mail.download_attachments('airtel-dnd@terragonltd.com')
+    # airtel_dnd_result = dnd_mail.download_attachments('airtel-dnd@terragonltd.com')
+    # print(airtel_dnd_result)
+    # mtn_dnd_result = dnd_mail.download_attachments('sdp@mtn.com')
+    # print(mtn_dnd_result)
+    
+    # dnd_mail.convert_files(airtel_dnd_result)
+    # dnd_mail.convert_files(mtn_dnd_result)
+
+    # mtn_mnp_result = mnp_mail.download_attachments('DAAS_note_ng@mtn.com')
+    # print(mtn_mnp_result)
+
+    # mnp_mail.convert_files(mtn_mnp_result)
+
+    # dnd_mail.close_connection()
+    # mnp_mail.close_connection()
+
+    mail = FetchEmail('imap.gmail.com',
+                dnd_username, dnd_password)
+
+    airtel_dnd_result = mail.download_attachments('airtel-dnd@terragonltd.com')
     print(airtel_dnd_result)
-    mtn_dnd_result = dnd_mail.download_attachments('sdp@mtn.com')
+    mtn_dnd_result = mail.download_attachments('sdp@mtn.com')
     print(mtn_dnd_result)
-    
-    dnd_mail.convert_files(airtel_dnd_result)
-    dnd_mail.convert_files(mtn_dnd_result)
 
-    mtn_mnp_result = mnp_mail.download_attachments('DAAS_note_ng@mtn.com')
+    mail.close_connection()
+
+    mail = FetchEmail('imap.gmail.com',
+                mnp_username, mnp_password)
+
+    mtn_mnp_result = mail.download_attachments('DAAS_note_ng@mtn.com')
     print(mtn_mnp_result)
 
-    mnp_mail.convert_files(mtn_mnp_result)
+    att_dir = airtel_dnd_result or mtn_dnd_result or mtn_mnp_result
 
-    dnd_mail.close_connection()
-    mnp_mail.close_connection()
+    mail.convert_files(att_dir)
+
+    mail.close_connection()
