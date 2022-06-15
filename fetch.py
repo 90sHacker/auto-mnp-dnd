@@ -412,3 +412,4 @@ if __name__ == '__main__':
     mail.convert_files(att_dir)
 
     mail.close_connection()
+
