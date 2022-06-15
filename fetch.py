@@ -164,8 +164,7 @@ class FetchEmail():
                     try:
                         with open(Path(temp.name), "rb") as tp:
                             final_data_path = f'{base_mnp}mtn/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                            # data_write = bucket.upload_fileobj(tp, final_data_path)
-                            data_write = bucket.upload_file(tp, final_data_path)
+                            data_write = bucket.upload_fileobj(tp, final_data_path)
                             if data_write:
                                 print('Upload successful!')
                             print("Data Path ==> {} ... \n".format(final_data_path))
@@ -185,8 +184,7 @@ class FetchEmail():
                     try:
                         with open(Path(temp.name), "rb") as tp:
                             final_data_path = f'{base_dnd}mtn/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                            # data_write = bucket.upload_fileobj(tp, final_data_path)
-                            data_write = bucket.upload_file(tp, final_data_path)
+                            data_write = bucket.upload_fileobj(tp, final_data_path)
                             if data_write:
                                 print('Upload successful!')
                             print("Data Path ==> {} ... \n".format(final_data_path))
@@ -206,8 +204,7 @@ class FetchEmail():
                     try:
                         with open(Path(temp.name), "rb") as tp:
                             final_data_path = f'{base_mnp}airtel/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                            # data_write = bucket.upload_fileobj(tp, final_data_path)
-                            data_write = bucket.upload_file(tp, final_data_path)
+                            data_write = bucket.upload_fileobj(tp, final_data_path)
                             if data_write:
                                 print('Upload successful!')
                             print("Data Path ==> {} ... \n".format(final_data_path))
@@ -226,8 +223,7 @@ class FetchEmail():
                     try:
                         with open(Path(temp.name), "rb") as tp:
                             final_data_path = f'{base_dnd}airtel/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                            # data_write = bucket.upload_fileobj(tp, final_data_path)
-                            data_write = bucket.upload_file(tp, final_data_path)
+                            data_write = bucket.upload_fileobj(tp, final_data_path)
                             if data_write:
                                 print('Upload successful!')
                             print("Data Path ==> {} ... \n".format(final_data_path))
@@ -247,8 +243,7 @@ class FetchEmail():
                     try:
                         with open(Path(temp.name), "rb") as tp:
                             final_data_path = f'{base_mnp}glo/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                            # data_write = bucket.upload_fileobj(tp, final_data_path)
-                            data_write = bucket.upload_file(tp, final_data_path)
+                            data_write = bucket.upload_fileobj(tp, final_data_path)
                             if data_write:
                                 print('Upload successful!')
                             print("Data Path ==> {} ... \n".format(final_data_path))
@@ -267,8 +262,7 @@ class FetchEmail():
                     try:
                         with open(Path(temp.name), "rb") as tp:
                             final_data_path = f'{base_dnd}glo/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                            # data_write = bucket.upload_fileobj(tp, final_data_path)
-                            data_write = bucket.upload_file(tp, final_data_path)
+                            data_write = bucket.upload_fileobj(tp, final_data_path)
                             if data_write:
                                 print('Upload successful!')
                             print("Data Path ==> {} ... \n".format(final_data_path))
@@ -288,8 +282,7 @@ class FetchEmail():
                     try:
                         with open(Path(temp.name), "rb") as tp:
                             final_data_path = f'{base_mnp}9mobile/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                            # data_write = bucket.upload_fileobj(tp, final_data_path)
-                            data_write = bucket.upload_file(tp, final_data_path)
+                            data_write = bucket.upload_fileobj(tp, final_data_path)
                             if data_write:
                                 print('Upload successful!')
                             print("Data Path ==> {} ... \n".format(final_data_path))
@@ -309,8 +302,7 @@ class FetchEmail():
                     try:
                         with open(Path(temp.name), "rb") as tp:
                             final_data_path = f'{base_dnd}9mobile/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                            # data_write = bucket.upload_fileobj(tp, final_data_path)
-                            data_write = bucket.upload_file(tp, final_data_path)
+                            data_write = bucket.upload_fileobj(tp, final_data_path)
                             if data_write:
                                 print('Upload successful!')
                             print("Data Path ==> {} ... \n".format(final_data_path))
