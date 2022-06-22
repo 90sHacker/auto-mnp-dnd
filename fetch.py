@@ -175,8 +175,8 @@ class FetchEmail():
                         #         print('Upload successful!')
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
-                        # temp.close()
-                        # Path(temp.name).unlink()
+                        temp.close()
+                        Path(temp.name).unlink()
                     except FileNotFoundError:
                         print('File not found')
             
@@ -201,8 +201,8 @@ class FetchEmail():
                         #         print('Upload successful!')
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
-                        # temp.close()
-                        # Path(temp.name).unlink()
+                        temp.close()
+                        Path(temp.name).unlink()
                     except FileNotFoundError:
                         print('File not found')
 
@@ -227,8 +227,8 @@ class FetchEmail():
                         #         print('Upload successful!')
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
-                        # temp.close()
-                        # Path(temp.name).unlink()
+                        temp.close()
+                        Path(temp.name).unlink()
                     except FileNotFoundError:
                         print('File not found')
 
@@ -252,8 +252,8 @@ class FetchEmail():
                         #         print('Upload successful!')
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
-                        # temp.close()
-                        # Path(temp.name).unlink()
+                        temp.close()
+                        Path(temp.name).unlink()
                     except FileNotFoundError:
                         print('File not found')
 
@@ -278,8 +278,8 @@ class FetchEmail():
                         #         print('Upload successful!')
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
-                        # temp.close()
-                        # Path(temp.name).unlink()
+                        temp.close()
+                        Path(temp.name).unlink()
                     except FileNotFoundError:
                         print('File not found')
 
@@ -303,8 +303,8 @@ class FetchEmail():
                         #         print('Upload successful!')
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
-                        # temp.close()
-                        # Path(temp.name).unlink()
+                        temp.close()
+                        Path(temp.name).unlink()
                     except FileNotFoundError:
                         print('File not found')
             
@@ -329,8 +329,8 @@ class FetchEmail():
                         #         print('Upload successful!')
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
-                        # temp.close()
-                        # Path(temp.name).unlink()
+                        temp.close()
+                        Path(temp.name).unlink()
                     except FileNotFoundError:
                         print('File not found')
                     
@@ -355,8 +355,8 @@ class FetchEmail():
                         #         print('Upload successful!')
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
-                        # temp.close()
-                        # Path(temp.name).unlink()
+                        temp.close()
+                        Path(temp.name).unlink()
                     except FileNotFoundError:
                         print('File not found')
 
@@ -368,7 +368,7 @@ class FetchEmail():
                         con_dir.mkdir()
                     con_dir.joinpath(f'{path.stem}.txt').write_bytes(text)
             
-            # path.unlink()
+            path.unlink()
 
 if __name__ == '__main__':
     # dnd_mail = FetchEmail('imap.gmail.com',
