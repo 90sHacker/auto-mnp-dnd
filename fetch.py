@@ -121,7 +121,7 @@ class FetchEmail():
                     file_name = Path(file_name)
                     att_dir = Path(download_folder)
                     file_path = att_dir / file_name
-                    if str(file_path.suffix) in ['.txt', '.xls', '.csv']:
+                    if str(file_path.suffix) in ['.txt', '.xls', '.csv', '.pdf']:
                         if att_dir.exists() == False:
                             att_dir.mkdir()
                         file_path.write_bytes(part.get_payload(decode=True))
@@ -176,7 +176,7 @@ class FetchEmail():
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
                         # temp.close()
-                        # os.unlink(temp)
+                        # Path(temp.name).unlink()
                     except FileNotFoundError:
                         print('File not found')
             
@@ -202,7 +202,7 @@ class FetchEmail():
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
                         # temp.close()
-                        # os.unlink(temp)
+                        # Path(temp.name).unlink()
                     except FileNotFoundError:
                         print('File not found')
 
@@ -228,7 +228,7 @@ class FetchEmail():
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
                         # temp.close()
-                        # os.unlink(temp)
+                        # Path(temp.name).unlink()
                     except FileNotFoundError:
                         print('File not found')
 
@@ -253,7 +253,7 @@ class FetchEmail():
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
                         # temp.close()
-                        # os.unlink(temp)
+                        # Path(temp.name).unlink()
                     except FileNotFoundError:
                         print('File not found')
 
@@ -279,7 +279,7 @@ class FetchEmail():
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
                         # temp.close()
-                        # os.unlink(temp)
+                        # Path(temp.name).unlink()
                     except FileNotFoundError:
                         print('File not found')
 
@@ -304,7 +304,7 @@ class FetchEmail():
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
                         # temp.close()
-                        # os.unlink(temp)
+                        # Path(temp.name).unlink()
                     except FileNotFoundError:
                         print('File not found')
             
@@ -330,7 +330,7 @@ class FetchEmail():
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
                         # temp.close()
-                        # os.unlink(temp)
+                        # Path(temp.name).unlink()
                     except FileNotFoundError:
                         print('File not found')
                     
@@ -356,9 +356,10 @@ class FetchEmail():
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
                         # temp.close()
-                        # os.unlink(temp)
+                        # Path(temp.name).unlink()
                     except FileNotFoundError:
                         print('File not found')
+
             else:
                 if path.stem != '.DS_Store':
                     text = textract.process(str(path.absolute()))
@@ -366,7 +367,8 @@ class FetchEmail():
                     if con_dir.exists() == False:
                         con_dir.mkdir()
                     con_dir.joinpath(f'{path.stem}.txt').write_bytes(text)
-
+            
+            # path.unlink()
 
 if __name__ == '__main__':
     # dnd_mail = FetchEmail('imap.gmail.com',
@@ -412,4 +414,3 @@ if __name__ == '__main__':
     mail.convert_files(att_dir)
 
     mail.close_connection()
-
