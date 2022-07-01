@@ -122,13 +122,16 @@ class FetchEmail():
                     att_dir = Path(download_folder)
                     file_path = att_dir / file_name
                     if str(file_path.suffix) in ['.txt', '.xls', '.csv', '.pdf']:
-                        if att_dir.exists() == False:
-                            att_dir.mkdir()
+                        # if att_dir.exists() == False:
+                        #     att_dir.mkdir()
+                        att_dir = os.path.dirname(os.path.realpath(file_path))
+                        if not os.path.exists(att_dir):
+                            os.mkdir(att_dir)
                         file_path.write_bytes(part.get_payload(decode=True))
                         # self.convert_files(att_dir)
     
-        if(isinstance(att_dir, Path)):
-            return att_dir.absolute()
+        # if(isinstance(att_dir, Path)):
+        #     return att_dir.absolute()
 
         return att_dir
 
