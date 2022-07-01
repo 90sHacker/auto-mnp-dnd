@@ -121,7 +121,7 @@ class FetchEmail():
                     file_name = Path(file_name)
                     att_dir = Path(download_folder)
                     file_path = att_dir / file_name
-                    if str(file_path.suffix) in ['.txt', '.xls', '.csv', '.pdf']:
+                    if str(file_path.suffix) in ['.txt', '.xls', '.csv']:
                         # if att_dir.exists() == False:
                         #     att_dir.mkdir()
                         att_dir = os.path.dirname(os.path.realpath(file_path))
