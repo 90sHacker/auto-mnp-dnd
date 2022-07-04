@@ -1,6 +1,7 @@
 import imaplib
 import email
 import textract
+import tabula
 import tempfile
 import boto3
 import os
@@ -121,7 +122,7 @@ class FetchEmail():
                     file_name = Path(file_name)
                     att_dir = Path(download_folder)
                     file_path = att_dir / file_name
-                    if str(file_path.suffix) in ['.txt', '.xls', '.csv']:
+                    if str(file_path.suffix) in ['.txt', '.xls', '.csv', '.pdf']:
                         # if att_dir.exists() == False:
                         #     att_dir.mkdir()
                         att_dir = os.path.dirname(os.path.realpath(file_path))
@@ -159,14 +160,20 @@ class FetchEmail():
         for path in file_path.rglob('*.*'):
             if path.stem.__contains__('mtn'):
                 if self.check_file_name(path.stem, ['mnp']):
-                    #convert file to .txt
-                    text = textract.process(str(path.absolute()))
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
-                    temp.write(text)
+                    if path.suffix == '.pdf':
+                        # convert file to .csv
+                        data_path = f"attachments/{path.stem}.csv"
+                        tabula.convert_into(path, data_path, output_format="csv", pages='all')
+                    else:
+                        #convert file to .txt
+                        text = textract.process(str(path.absolute()))
+                        temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
+                        temp.write(text)
+                        data_path = temp.name
                     #upload to s3 as specified name format
                     try:
                         final_data_path = f'{base_mnp}mtn/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                        data_write = bucket.upload_file(str(Path(temp.name)), final_data_path)
+                        data_write = bucket.upload_file(data_path, final_data_path)
                         if data_write is None:
                             print('Upload successful!')
                         print("Data Path ==> {} ... \n".format(final_data_path))
@@ -178,21 +185,27 @@ class FetchEmail():
                         #         print('Upload successful!')
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
-                        temp.close()
-                        Path(temp.name).unlink()
+                        # temp.close()
+                        Path(data_path).unlink()
                     except FileNotFoundError:
                         print('File not found')
             
 
                 if self.check_file_name(path.stem, ['dnd']):
-                    #convert file to .txt
-                    text = textract.process(str(path.absolute()))
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
-                    temp.write(text)
+                    if path.suffix == '.pdf':
+                        # convert file to .csv
+                        data_path = f"attachments/{path.stem}.csv"
+                        tabula.convert_into(path, data_path, output_format="csv", pages='all')
+                    else:
+                        #convert file to .txt
+                        text = textract.process(str(path.absolute()))
+                        temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
+                        temp.write(text)
+                        data_path = temp.name
                     #upload to s3 as specified name format
                     try:
                         final_data_path = f'{base_dnd}mtn/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                        data_write = bucket.upload_file(str(Path(temp.name)), final_data_path)
+                        data_write = bucket.upload_file(data_path, final_data_path)
                         if data_write is None:
                             print('Upload successful!')
                         print("Data Path ==> {} ... \n".format(final_data_path))
@@ -204,21 +217,27 @@ class FetchEmail():
                         #         print('Upload successful!')
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
-                        temp.close()
-                        Path(temp.name).unlink()
+                        # temp.close()
+                        Path(data_path).unlink()
                     except FileNotFoundError:
                         print('File not found')
 
             elif path.stem.__contains__('airtel'):
                 if self.check_file_name(path.stem, ['mnp']):
-                    #convert file to .txt
-                    text = textract.process(str(path.absolute()))
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
-                    temp.write(text)
+                    if path.suffix == '.pdf':
+                        # convert file to .csv
+                        data_path = f"attachments/{path.stem}.csv"
+                        tabula.convert_into(path, data_path, output_format="csv", pages='all')
+                    else:
+                        #convert file to .txt
+                        text = textract.process(str(path.absolute()))
+                        temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
+                        temp.write(text)
+                        data_path = temp.name
                     #upload to s3 as specified name format
                     try:
                         final_data_path = f'{base_mnp}airtel/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                        data_write = bucket.upload_file(str(Path(temp.name)), final_data_path)
+                        data_write = bucket.upload_file(data_path, final_data_path)
                         if data_write is None:
                             print('Upload successful!')
                         print("Data Path ==> {} ... \n".format(final_data_path))
@@ -230,20 +249,26 @@ class FetchEmail():
                         #         print('Upload successful!')
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
-                        temp.close()
-                        Path(temp.name).unlink()
+                        # temp.close()
+                        Path(data_path).unlink()
                     except FileNotFoundError:
                         print('File not found')
 
                 if self.check_file_name(path.stem, ['dnd']):
-                    #convert file to .txt
-                    text = textract.process(str(path.absolute()))
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
-                    temp.write(text)
+                    if path.suffix == '.pdf':
+                        # convert file to .csv
+                        data_path = f"attachments/{path.stem}.csv"
+                        tabula.convert_into(path, data_path, output_format="csv", pages='all')
+                    else:
+                        #convert file to .txt
+                        text = textract.process(str(path.absolute()))
+                        temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
+                        temp.write(text)
+                        data_path = temp.name
                     #upload to s3 as specified name format
                     try:
                         final_data_path = f'{base_dnd}airtel/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                        data_write = bucket.upload_file(str(Path(temp.name)), final_data_path)
+                        data_write = bucket.upload_file(data_path, final_data_path)
                         if data_write is None:
                             print('Upload successful!')
                         print("Data Path ==> {} ... \n".format(final_data_path))
@@ -255,21 +280,27 @@ class FetchEmail():
                         #         print('Upload successful!')
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
-                        temp.close()
-                        Path(temp.name).unlink()
+                        # temp.close()
+                        Path(data_path).unlink()
                     except FileNotFoundError:
                         print('File not found')
 
             elif path.stem.__contains__('glo'):
                 if self.check_file_name(path.stem, ['mnp']):
-                    #convert file to .txt
-                    text = textract.process(str(path.absolute()))
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
-                    temp.write(text)
+                    if path.suffix == '.pdf':
+                        # convert file to .csv
+                        data_path = f"attachments/{path.stem}.csv"
+                        tabula.convert_into(path, data_path, output_format="csv", pages='all')
+                    else:
+                        #convert file to .txt
+                        text = textract.process(str(path.absolute()))
+                        temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
+                        temp.write(text)
+                        data_path = temp.name
                     #upload to s3 as specified name format
                     try:
                         final_data_path = f'{base_mnp}glo/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                        data_write = bucket.upload_file(str(Path(temp.name)), final_data_path)
+                        data_write = bucket.upload_file(data_path, final_data_path)
                         if data_write is None:
                             print('Upload successful!')
                         print("Data Path ==> {} ... \n".format(final_data_path))
@@ -281,20 +312,26 @@ class FetchEmail():
                         #         print('Upload successful!')
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
-                        temp.close()
-                        Path(temp.name).unlink()
+                        # temp.close()
+                        Path(data_path).unlink()
                     except FileNotFoundError:
                         print('File not found')
 
                 if self.check_file_name(path.stem, ['dnd']):
-                    #convert file to .txt
-                    text = textract.process(str(path.absolute()))
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
-                    temp.write(text)
+                    if path.suffix == '.pdf':
+                        # convert file to .csv
+                        data_path = f"attachments/{path.stem}.csv"
+                        tabula.convert_into(path, data_path, output_format="csv", pages='all')
+                    else:
+                        #convert file to .txt
+                        text = textract.process(str(path.absolute()))
+                        temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
+                        temp.write(text)
+                        data_path = temp.name
                     #upload to s3 as specified name format
                     try:
                         final_data_path = f'{base_dnd}glo/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                        data_write = bucket.upload_file(str(Path(temp.name)), final_data_path)
+                        data_write = bucket.upload_file(data_path, final_data_path)
                         if data_write is None:
                             print('Upload successful!')
                         print("Data Path ==> {} ... \n".format(final_data_path))
@@ -306,21 +343,27 @@ class FetchEmail():
                         #         print('Upload successful!')
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
-                        temp.close()
-                        Path(temp.name).unlink()
+                        # temp.close()
+                        Path(data_path).unlink()
                     except FileNotFoundError:
                         print('File not found')
             
             elif path.stem.__contains__('9mobile'):
                 if self.check_file_name(path.stem, ['mnp']):
-                    #convert file to .txt
-                    text = textract.process(str(path.absolute()))
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
-                    temp.write(text)
+                    if path.suffix == '.pdf':
+                        # convert file to .csv
+                        data_path = f"attachments/{path.stem}.csv"
+                        tabula.convert_into(path, data_path, output_format="csv", pages='all')
+                    else:
+                        #convert file to .txt
+                        text = textract.process(str(path.absolute()))
+                        temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
+                        temp.write(text)
+                        data_path = temp.name
                     #upload to s3 as specified name format
                     try:
                         final_data_path = f'{base_mnp}9mobile/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                        data_write = bucket.upload_file(str(Path(temp.name)), final_data_path)
+                        data_write = bucket.upload_file(data_path, final_data_path)
                         if data_write is None:
                             print('Upload successful!')
                         print("Data Path ==> {} ... \n".format(final_data_path))
@@ -332,21 +375,27 @@ class FetchEmail():
                         #         print('Upload successful!')
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
-                        temp.close()
-                        Path(temp.name).unlink()
+                        # temp.close()
+                        Path(data_path).unlink()
                     except FileNotFoundError:
                         print('File not found')
                     
 
                 if self.check_file_name(path.stem, ['dnd']):
-                    #convert file to .txt
-                    text = textract.process(str(path.absolute()))
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
-                    temp.write(text)
+                    if path.suffix == '.pdf':
+                        # convert file to .csv
+                        data_path = f"attachments/{path.stem}.csv"
+                        tabula.convert_into(path, data_path, output_format="csv", pages='all')
+                    else:
+                        #convert file to .txt
+                        text = textract.process(str(path.absolute()))
+                        temp = tempfile.NamedTemporaryFile(delete=False, suffix='.txt', dir=file_path)
+                        temp.write(text)
+                        data_path = temp.name
                     #upload to s3 as specified name format
                     try:
                         final_data_path = f'{base_dnd}9mobile/{dt.strftime("%Y")}{dt.strftime("%m")}{dt.strftime("%d")}.txt'
-                        data_write = bucket.upload_file(str(Path(temp.name)), final_data_path)
+                        data_write = bucket.upload_file(data_path, final_data_path)
                         if data_write is None:
                             print('Upload successful!')
                         print("Data Path ==> {} ... \n".format(final_data_path))
@@ -358,8 +407,8 @@ class FetchEmail():
                         #         print('Upload successful!')
                         #     print("Data Path ==> {} ... \n".format(final_data_path))
                         #     print("Final data object ", data_write)
-                        temp.close()
-                        Path(temp.name).unlink()
+                        # temp.close()
+                        Path(data_path).unlink()
                     except FileNotFoundError:
                         print('File not found')
 
